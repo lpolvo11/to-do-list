@@ -38,14 +38,9 @@ class TaskManager:
         self.conn.commit()
         return task_id
     def remove_task(self, id):
-        self.cursor.execute(
-            '''DELETE FROM todo WHERE id = %s''',(id, )
-        )
         task_list = self.cursor.fetchall()
         if not task_list:
-            print(
-                'the list is empty'
-            )
+            print('the list is empty')
         else:
             self.cursor.execute('''DELETE FROM todo WHERE id = %s''', (id,))
             self.conn.commit()
@@ -65,7 +60,7 @@ class TaskManager:
         if not tasks_seen:
             print('No tasks found')
         else:
-            for task in tasks:
+            for task in tasks_seen:
                 print(f"The ID: {task[0]}, The task name: {task[1]}")
             self.conn.commit()
     def commit(self):
@@ -104,7 +99,7 @@ while True:
     elif user_choice == '5':
         task_manager.close()
         print('Goodbye!')
-        time.sleep(1.3)
+        time.sleep(0.5)
         exit()
     else:
         print('please enter a valid choice.')
