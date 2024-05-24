@@ -18,7 +18,7 @@ class TaskManager:
                 new_table_name = input('Enter the new table name: ')
                 self.cursor.execute(f'''ALTER TABLE todo RENAME TO {new_table_name}''')
             else:
-                self.cursor.execute('ALTER TABLE todo RENAME TO todo')
+                self.cursor.execute('ALTER TABLE todo RENAME TO todo') 
             self.commit()
         except Exception as error:
             print(f'Error while renaming the table, {str(error)}')
@@ -69,38 +69,39 @@ class TaskManager:
         self.conn.close()
 
 task_manager = TaskManager(dbname='todolist', password='123', user='postgres', host='localhost', port=8080)
-while True:
-    user_choice = input("1) to add task , 2) to remove task , 3) to update task , 4) to view task , 5) to exit the program: \n")
-    if user_choice == '1':
-        try:
-            addTask = str(input("Add task: "))
-            task_manager.add_task(addTask)
-            print(f"The '{addTask}' Task has been added successfully")
-        except Exception as error:
-            print(f"Error while adding the task,{str(error)}")
-    elif user_choice == '2':
-        try:
-            remove_task = input("Remove Task ID: ")
-            task_manager.remove_task(remove_task)
-            print(f"The '{remove_task}' task has been removed successfully")
-        except Exception as error:
-            print(f"Error while removing the task,{str(error)}")
-    elif user_choice == '3':
-        updateTaskById = int(input('Enter the ID of the task you want to update: '))
-        newTaskName = input('Enter the new task name: ')
-        task_manager.update_task(updateTaskById, newTaskName)
-    elif user_choice == '4':
-        try:
-            print('View tasks: ')
-            task_manager.view_tasks()
-            task_manager.commit()
-        except Exception as error:
-            print(f"Error while viewing the task,{str(error)}")
-    elif user_choice == '5':
-        task_manager.close()
-        print('Goodbye!')
-        time.sleep(0.5)
-        exit()
-    else:
-        print('please enter a valid choice.')
-
+def main() -> any:
+    while True:
+        user_choice = input("1) to add task , 2) to remove task , 3) to update task , 4) to view task , 5) to exit the program: \n")
+        if user_choice == '1':
+            try:
+                addTask = str(input("Add task: "))
+                task_manager.add_task(addTask)
+                print(f"The '{addTask}' Task has been added successfully")
+            except Exception as error:
+                print(f"Error while adding the task,{str(error)}")
+        elif user_choice == '2':
+            try:
+                remove_task = input("Remove Task ID: ")
+                task_manager.remove_task(remove_task)
+                print(f"The '{remove_task}' task has been removed successfully")
+            except Exception as error:
+                print(f"Error while removing the task,{str(error)}")
+        elif user_choice == '3':
+            updateTaskById = int(input('Enter the ID of the task you want to update: '))
+            newTaskName = input('Enter the new task name: ')
+            task_manager.update_task(updateTaskById, newTaskName)
+        elif user_choice == '4':
+            try:
+                print('View tasks: ')
+                task_manager.view_tasks()
+                task_manager.commit()
+            except Exception as error:
+                print(f"Error while viewing the task,{str(error)}")
+        elif user_choice == '5':
+            task_manager.close()
+            print('Goodbye!')
+            time.sleep(0.5)
+            exit()
+        else:
+            print('please enter a valid choice.')
+main()
